@@ -48,7 +48,7 @@ const ProductCard: React.FC<IProductCardProps> = ({
 								id,
 								title,
 								image,
-								price,
+								price: price - price/quantity,
 								quantity: quantity - 1,
 							})
 						}
@@ -62,7 +62,7 @@ const ProductCard: React.FC<IProductCardProps> = ({
 								id,
 								title,
 								image,
-								price,
+								price: price + price/quantity,
 								quantity: quantity + 1,
 							})
 						}
