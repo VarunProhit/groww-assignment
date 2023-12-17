@@ -6,6 +6,7 @@ import { getOrderDetails } from "@/utils/api/checkout";
 import { getTotalPrice, stylesConfig } from "@/utils/functions";
 import styles from "@/styles/Home.module.scss";
 import useStore from "@/hooks/store";
+import { toast } from "react-hot-toast";
 
 const classes = stylesConfig(styles, "home");
 
@@ -29,7 +30,7 @@ const HomePage: React.FC = () => {
 	const proceedToPayment = (e: any) => {
 		e.preventDefault();
 		if (products.length === 0) {
-			alert("Please add products to your cart");
+		 toast.error("Please add products to your cart");
 		} else {
 			router.push("/payment");
 		}

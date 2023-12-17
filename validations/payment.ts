@@ -1,43 +1,12 @@
+import { specialCharacters, upiServices } from "@/constants/variables";
 import { ICardDetails } from "@/types/order";
 
 export const validateUpi = async (upi: string) => {
-	if (upi.length < 3) return Promise.reject("UPI is too short");
-	if (upi.length > 100) return Promise.reject("UPI is too long");
 	if (!upi.includes("@")) return Promise.reject("UPI is invalid");
 	if (upi.split("@").length > 2) return Promise.reject("UPI is invalid");
-	if (upi.split("@")[1].length < 3) return Promise.reject("UPI is invalid");
-	if (upi.split("@")[1].length > 100) return Promise.reject("UPI is invalid");
-
-	if (
-		![
-			"apl",
-			"abfspay",
-			"abfspay",
-			"axisb",
-			"idfcbank",
-			"icici",
-			"okaxis",
-			"yesg",
-			"jupiteraxis",
-			"goaxb",
-			"icici",
-			"ikwik",
-			"naviaxis",
-			"NIYOICICI",
-			"ybl",
-			"pingpay",
-			"shriramhdfcbank",
-			"sliceaxis",
-			"tapicici",
-			"timecosmos",
-			"yesbank",
-			"idfcbank",
-			"waicici",
-			"icici",
-			"yesbank",
-			"zoicici",
-		].includes(upi.split("@")[1])
-	)
+	if (upi.includes(" ")) return Promise.reject("UPI is invalid");
+	if (specialCharacters.split("").some((char) => upi.split("@")[0].includes(char))) return Promise.reject("UPI is Invalid");
+	if (!upiServices.includes(upi.split("@")[1]))
 		return Promise.reject("UPI is invalid");
 	return Promise.resolve();
 };

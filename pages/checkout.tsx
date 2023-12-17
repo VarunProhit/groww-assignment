@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { stylesConfig } from "@/utils/functions";
 import styles from "@/styles/Checkout.module.scss";
-import { Typography } from "@/library";
+import { Button, Typography } from "@/library";
 import useStore from "@/hooks/store";
 import { useRouter } from "next/router";
 
@@ -15,7 +15,7 @@ const CheckoutPage: React.FC = () => {
 	>("pending");
 
 	useEffect(() => {
-		if (!isPaymentSucceeded) router.push("/payment");
+		if (!isPaymentSucceeded) router.push("/");
 		const tm = setTimeout(() => {
 			setOrderingState(Math.random() > 0.5 ? "success" : "error");
 		}, 2000);
@@ -58,6 +58,11 @@ const CheckoutPage: React.FC = () => {
 					>
 						Thank you for shopping with us!
 					</Typography>
+					<Button onClick={()=>{
+						router.push("/")
+					}}>
+						Place another order
+					</Button>
 				</section>
 			) : (
 				<section className={classes("-error")}>
@@ -75,6 +80,11 @@ const CheckoutPage: React.FC = () => {
 					>
 						Please try again later
 					</Typography>
+					<Button onClick={()=>{
+						router.push("/payment")
+					}}>
+						Try Again
+					</Button>
 				</section>
 			)}
 		</main>

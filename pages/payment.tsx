@@ -9,6 +9,7 @@ import Image from "next/image";
 import useStore from "@/hooks/store";
 import Input from "@/library/Input";
 import { validateDeliveryDetails } from "@/validations/user";
+import { toast } from "react-hot-toast";
 
 const classes = stylesConfig(styles, "home");
 
@@ -55,9 +56,9 @@ const HomePage: React.FC = () => {
 				throw Error("Payment not successful");
 			}
 			router.push("/checkout");
-		} catch (error) {
+		} catch (error:any) {
 			console.error(error);
-			alert(error);
+			toast.error(error.toString());
 		}
 	};
 

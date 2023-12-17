@@ -1,6 +1,7 @@
 import React from "react";
 import Seo from "./Seo";
 import { frontendBaseUrl } from "@/constants/variables";
+import { Toaster } from "react-hot-toast";
 
 const Layout: React.FC<any> = ({ children }) => {
 	return (
@@ -38,6 +39,7 @@ const Layout: React.FC<any> = ({ children }) => {
 				}}
 			/>
 			{children}
+			<Toaster position="top-center" />
 		</>
 	);
 };

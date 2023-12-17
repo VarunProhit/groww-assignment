@@ -5,6 +5,7 @@ import { Button } from "@/library";
 import Input from "@/library/Input";
 import { validateCard, validateUpi } from "@/validations/payment";
 import { ICardDetails } from "@/types/order";
+import { toast } from "react-hot-toast";
 
 interface IPaymentMethodProps {
 	onSuccessfulPayment: () => void;
@@ -27,9 +28,9 @@ const PaymentMethodUPI: React.FC<IPaymentMethodProps> = ({
 			setLoading(true);
 			await validateUpi(upiId);
 			onSuccessfulPayment();
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error);
-			alert(error);
+			toast.error(error.toString());
 		} finally {
 			setLoading(false);
 		}
@@ -75,9 +76,9 @@ const PaymentMethodCard: React.FC<IPaymentMethodProps> = ({
 			setLoading(true);
 			await validateCard(cardDetails);
 			onSuccessfulPayment();
-		} catch (error) {
+		} catch (error:any) {
 			console.error(error);
-			alert(error);
+			toast.error(error.toString());
 		} finally {
 			setLoading(false);
 		}

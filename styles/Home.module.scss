@@ -1,3 +1,4 @@
+@import "@/styles/config/mixins";
 .home {
 	width: 100vw;
 	display: flex;
@@ -17,6 +18,11 @@
 		display: flex;
 		justify-content: center;
 		align-items: flex-start;
+		@include responsive(phone){
+			flex-direction: column;
+			justify-content: flex-start;
+			align-items: center;
+		}
 	}
 
 	&-order-details {
@@ -26,6 +32,9 @@
 		align-items: flex-start;
 		flex-direction: column;
 		gap: 24px;
+		@include responsive(phone){
+			width: 100%;
+		}
 	}
 
 	&-products {
@@ -36,6 +45,9 @@
 		flex-direction: column;
 		gap: 24px;
 		padding: 0 5% 0 0;
+		@include responsive(phone){
+			padding: 0;
+		}
 	}
 
 	&-order-summary {
@@ -45,6 +57,10 @@
 		align-items: center;
 		flex-direction: column;
 		gap: 24px;
+		@include responsive(phone){
+			margin-top: 24px;
+			width: 100%;
+		}
 
 		&-title {
 			width: 100%;
@@ -132,7 +148,9 @@
 		flex-direction: column;
 		gap: 12px;
 		padding: 0 25% 0 0;
-
+        @include responsive(phone){
+			padding: 0;
+		}
 		&-group {
 			width: 100%;
 			display: flex;
@@ -141,13 +159,19 @@
 			gap: 12px;
 		}
 	}
-
+    
 	&--payments-page &-order-details {
 		width: 55%;
+		@include responsive(phone){
+			width: 100%;
+		}
 	}
-
+    
 	&--payments-page &-order-summary {
 		width: 45%;
+		@include responsive(phone){
+			width: 100%;
+		}
 	}
 }
 
