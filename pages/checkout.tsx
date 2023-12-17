@@ -59,7 +59,7 @@ const CheckoutPage: React.FC = () => {
 						Thank you for shopping with us!
 					</Typography>
 					<Button onClick={()=>{
-						router.push("/")
+						router.push("/");
 					}}>
 						Place another order
 					</Button>
@@ -81,7 +81,7 @@ const CheckoutPage: React.FC = () => {
 						Please try again later
 					</Typography>
 					<Button onClick={()=>{
-						router.push("/payment")
+						router.push("/payment");
 					}}>
 						Try Again
 					</Button>

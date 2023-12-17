@@ -30,7 +30,7 @@ const HomePage: React.FC = () => {
 	const proceedToPayment = (e: any) => {
 		e.preventDefault();
 		if (products.length === 0) {
-		 toast.error("Please add products to your cart");
+			toast.error("Please add products to your cart");
 		} else {
 			router.push("/payment");
 		}
