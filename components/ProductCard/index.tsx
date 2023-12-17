@@ -1,5 +1,5 @@
 import React from "react";
-import { stylesConfig } from "@/utils/functions";
+import { roundOff, stylesConfig } from "@/utils/functions";
 import styles from "./styles.module.scss";
 import { IProduct } from "@/types/order";
 import { Typography } from "@/library";
@@ -48,7 +48,7 @@ const ProductCard: React.FC<IProductCardProps> = ({
 								id,
 								title,
 								image,
-								price: price - price/quantity,
+								price,
 								quantity: quantity - 1,
 							})
 						}
@@ -62,7 +62,7 @@ const ProductCard: React.FC<IProductCardProps> = ({
 								id,
 								title,
 								image,
-								price: price + price/quantity,
+								price,
 								quantity: quantity + 1,
 							})
 						}
@@ -75,7 +75,7 @@ const ProductCard: React.FC<IProductCardProps> = ({
 					weight="medium"
 					className={classes("-price")}
 				>
-					Total price: ₹{price}
+					Total price: ₹ {roundOff(price*quantity,2)}
 				</Typography>
 			</div>
 			{/* <div className={classes("-price")}>₹{price}</div> */}
