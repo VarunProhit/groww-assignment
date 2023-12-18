@@ -83,6 +83,12 @@ const HomePage: React.FC = () => {
 											}
 										);
 										setProducts(newProducts);
+										const oldProducts = localStorage.getItem('orderDetails');
+										if(oldProducts){
+										const old = JSON.parse(oldProducts);
+										old.orderDetails.products = newProducts;
+										localStorage.setItem('orderDetails', JSON.stringify(old));
+										}
 									}}
 								/>
 							))}
@@ -145,7 +151,7 @@ const HomePage: React.FC = () => {
 									0
 								) === 0
 							}
-						>
+						>  
 							Proceed to Payment
 						</Button>
 					</section>

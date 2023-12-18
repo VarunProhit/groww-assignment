@@ -17,7 +17,9 @@ const CheckoutPage: React.FC = () => {
 	useEffect(() => {
 		if (!isPaymentSucceeded) router.push("/");
 		const tm = setTimeout(() => {
-			setOrderingState(Math.random() > 0.5 ? "success" : "error");
+		const newState = Math.random() > 0.5 ? "success" : "error";
+		if(newState === "success") localStorage.removeItem("orderDetails");
+		setOrderingState(newState);
 		}, 2000);
 		return () => clearTimeout(tm);
 	}, []);
@@ -43,6 +45,7 @@ const CheckoutPage: React.FC = () => {
 					</Typography>
 				</section>
 			) : orderingState === "success" ? (
+				
 				<section className={classes("-success")}>
 					<Typography
 						size="head-3"
