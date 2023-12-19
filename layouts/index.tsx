@@ -38,6 +38,7 @@ const Layout: React.FC<any> = ({ children }) => {
 					siteName: "NextJS Boilerplate",
 				}}
 			/>
+			<div className="logo" />
 			{children}
 			<Toaster position="top-center" />
 		</>
