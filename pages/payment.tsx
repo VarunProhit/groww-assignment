@@ -64,6 +64,9 @@ const HomePage: React.FC = () => {
 
 	useEffect(() => {
 		getPaymentMethods();
+		if (isPaymentSucceeded){
+			router.push("/");
+		}
 	}, []);
 
 	return (
@@ -219,7 +222,6 @@ const HomePage: React.FC = () => {
 							<PaymentMethod
 								method={activeMethod}
 								onSuccessfulPayment={() => {
-									setIsPaymentSucceeded(true);
 									proceedToCheckout();
 								}}
 							/>

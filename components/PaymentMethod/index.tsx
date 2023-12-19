@@ -6,6 +6,7 @@ import Input from "@/library/Input";
 import { validateCard, validateUpi } from "@/validations/payment";
 import { ICardDetails } from "@/types/order";
 import { toast } from "react-hot-toast";
+import useStore from "@/hooks/store";
 
 interface IPaymentMethodProps {
 	onSuccessfulPayment: () => void;
@@ -148,17 +149,25 @@ const PaymentMethodCard: React.FC<IPaymentMethodProps> = ({
 			</Button>
 		</form>
 	);
+	
 };
 
 const PaymentMethod: React.FC<IPaymentMethodContainerProps> = ({
 	method,
 	onSuccessfulPayment,
 }) => {
+	const {setIsPaymentSucceeded} = useStore();
 	const classes = stylesConfig(styles, "payment-method");
 	if (method === "CARDS")
-		return <PaymentMethodCard onSuccessfulPayment={onSuccessfulPayment} />;
+		return <PaymentMethodCard onSuccessfulPayment={()=>{
+			setIsPaymentSucceeded(true);
+			onSuccessfulPayment();
+		}} />;
 	else if (method === "UPI")
-		return <PaymentMethodUPI onSuccessfulPayment={onSuccessfulPayment} />;
+		return <PaymentMethodUPI onSuccessfulPayment={()=>{
+			setIsPaymentSucceeded(true);
+			onSuccessfulPayment();
+		}} />;
 	else return <div className={classes("")}>Payment Method not supported</div>;
 };
 

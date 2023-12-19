@@ -12,7 +12,7 @@ const classes = stylesConfig(styles, "home");
 
 const HomePage: React.FC = () => {
 	const router = useRouter();
-	const { products, setProducts } = useStore();
+	const { products, setProducts, isPaymentSucceeded, setIsPaymentSucceeded } = useStore();
 	const [loading, setLoading] = useState(true);
 
 	const getProducts = async () => {
@@ -20,6 +20,9 @@ const HomePage: React.FC = () => {
 			setLoading(true);
 			const res = await getOrderDetails();
 			setProducts(res.products);
+			if (isPaymentSucceeded){
+				setIsPaymentSucceeded(false);
+			}
 		} catch (error) {
 			console.error(error);
 		} finally {
