@@ -17,9 +17,11 @@ const CheckoutPage: React.FC = () => {
 	useEffect(() => {
 		if (!isPaymentSucceeded) router.push("/");
 		const tm = setTimeout(() => {
-		const newState = Math.random() > 0.5 ? "success" : "error";
-		if(newState === "success") localStorage.removeItem("orderDetails");
-		setOrderingState(newState);
+			const newState = Math.random() > 0.5 ? "success" : "error";
+			if (newState === "success") {
+				localStorage.removeItem("orderDetails");
+			}
+			setOrderingState(newState);
 		}, 2000);
 		return () => clearTimeout(tm);
 	}, []);
@@ -45,7 +47,6 @@ const CheckoutPage: React.FC = () => {
 					</Typography>
 				</section>
 			) : orderingState === "success" ? (
-				
 				<section className={classes("-success")}>
 					<Typography
 						size="head-3"
@@ -61,9 +62,11 @@ const CheckoutPage: React.FC = () => {
 					>
 						Thank you for shopping with us!
 					</Typography>
-					<Button onClick={()=>{
-						router.push("/");
-					}}>
+					<Button
+						onClick={() => {
+							router.push("/");
+						}}
+					>
 						Place another order
 					</Button>
 				</section>
@@ -83,9 +86,11 @@ const CheckoutPage: React.FC = () => {
 					>
 						Please try again later
 					</Typography>
-					<Button onClick={()=>{
-						router.push("/payment");
-					}}>
+					<Button
+						onClick={() => {
+							router.push("/payment");
+						}}
+					>
 						Try Again
 					</Button>
 				</section>

@@ -1,15 +1,13 @@
 import React, { useState } from "react";
-import { stylesConfig } from "@/utils/functions";
-import styles from "./styles.module.scss";
-import { Button } from "@/library";
-import Input from "@/library/Input";
-import { validateCard, validateUpi } from "@/validations/payment";
-import { ICardDetails } from "@/types/order";
 import { toast } from "react-hot-toast";
-import useStore from "@/hooks/store";
+import { Button, Input } from "@/library";
+import { ICardDetails } from "@/types/order";
+import { stylesConfig } from "@/utils/functions";
+import { validateCard, validateUpi } from "@/validations/payment";
+import styles from "./styles.module.scss";
 
 interface IPaymentMethodProps {
-	onSuccessfulPayment: () => void;
+	onProceedToPay: () => void;
 }
 
 interface IPaymentMethodContainerProps extends IPaymentMethodProps {
@@ -17,7 +15,7 @@ interface IPaymentMethodContainerProps extends IPaymentMethodProps {
 }
 
 const PaymentMethodUPI: React.FC<IPaymentMethodProps> = ({
-	onSuccessfulPayment,
+	onProceedToPay,
 }) => {
 	const [upiId, setUpiId] = useState("");
 	const [loading, setLoading] = useState(false);
@@ -28,7 +26,7 @@ const PaymentMethodUPI: React.FC<IPaymentMethodProps> = ({
 		try {
 			setLoading(true);
 			await validateUpi(upiId);
-			onSuccessfulPayment();
+			onProceedToPay();
 		} catch (error: any) {
 			console.error(error);
 			toast.error(error.toString());
@@ -60,7 +58,7 @@ const PaymentMethodUPI: React.FC<IPaymentMethodProps> = ({
 };
 
 const PaymentMethodCard: React.FC<IPaymentMethodProps> = ({
-	onSuccessfulPayment,
+	onProceedToPay,
 }) => {
 	const [loading, setLoading] = useState(false);
 	const [cardDetails, setCardDetails] = useState<ICardDetails>({
@@ -76,8 +74,8 @@ const PaymentMethodCard: React.FC<IPaymentMethodProps> = ({
 		try {
 			setLoading(true);
 			await validateCard(cardDetails);
-			onSuccessfulPayment();
-		} catch (error:any) {
+			onProceedToPay();
+		} catch (error: any) {
 			console.error(error);
 			toast.error(error.toString());
 		} finally {
@@ -149,26 +147,28 @@ const PaymentMethodCard: React.FC<IPaymentMethodProps> = ({
 			</Button>
 		</form>
 	);
-	
 };
 
 const PaymentMethod: React.FC<IPaymentMethodContainerProps> = ({
 	method,
-	onSuccessfulPayment,
+	onProceedToPay,
 }) => {
-	const {setIsPaymentSucceeded} = useStore();
 	const classes = stylesConfig(styles, "payment-method");
-	if (method === "CARDS")
-		return <PaymentMethodCard onSuccessfulPayment={()=>{
-			setIsPaymentSucceeded(true);
-			onSuccessfulPayment();
-		}} />;
-	else if (method === "UPI")
-		return <PaymentMethodUPI onSuccessfulPayment={()=>{
-			setIsPaymentSucceeded(true);
-			onSuccessfulPayment();
-		}} />;
-	else return <div className={classes("")}>Payment Method not supported</div>;
+	const handleProceedToPay = () => {
+		onProceedToPay();
+	};
+
+	return (
+		<>
+			{method === "CARDS" ? (
+				<PaymentMethodCard onProceedToPay={handleProceedToPay} />
+			) : method === "UPI" ? (
+				<PaymentMethodUPI onProceedToPay={handleProceedToPay} />
+			) : (
+				<div className={classes("")}>Payment Method not supported</div>
+			)}
+		</>
+	);
 };
 
 export default PaymentMethod;

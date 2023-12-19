@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import Image from "next/image";
 import { useRouter } from "next/router";
-import { Typography } from "@/library";
+import PaymentMethod from "@/components/PaymentMethod";
+import PaymentModal from "@/components/PaymentModal";
+import useStore from "@/hooks/store";
+import { Typography, Input } from "@/library";
 import { getOrderDetails } from "@/utils/api/checkout";
 import { getTotalPrice, stylesConfig } from "@/utils/functions";
-import styles from "@/styles/Home.module.scss";
-import PaymentMethod from "@/components/PaymentMethod";
-import Image from "next/image";
-import useStore from "@/hooks/store";
-import Input from "@/library/Input";
 import { validateDeliveryDetails } from "@/validations/user";
-import { toast } from "react-hot-toast";
+import styles from "@/styles/Home.module.scss";
 
 const classes = stylesConfig(styles, "home");
 
@@ -17,22 +17,33 @@ const HomePage: React.FC = () => {
 	const router = useRouter();
 	const {
 		products,
+		setProducts,
 		deliveryDetails,
 		setDeliveryDetails,
 		isPaymentSucceeded,
 		setIsPaymentSucceeded,
 	} = useStore();
 	const [loading, setLoading] = useState(true);
+	const [openModal, setOpenModal] = useState(false);
 	const [activeMethod, setActiveMethod] = useState<string | null>(null);
 	const [paymentMethods, setPaymentMethods] = useState<string[]>([]);
 
 	const getPaymentMethods = async () => {
 		try {
 			setLoading(true);
-			const res = await getOrderDetails();
-			setPaymentMethods(res.paymentMethods);
+			const res = localStorage.getItem("orderDetails");
+			if (res) {
+				const orderDetails = JSON.parse(res || "{}")?.orderDetails;
+				setPaymentMethods(orderDetails.paymentMethods);
+				if (products.length === 0 && orderDetails.products.length > 0) {
+					setProducts(orderDetails.products);
+				}
+			} else {
+				throw new Error("No order details found");
+			}
 		} catch (error) {
 			console.error(error);
+			router.push("/");
 		} finally {
 			setLoading(false);
 		}
@@ -46,27 +57,8 @@ const HomePage: React.FC = () => {
 		});
 	};
 
-	const proceedToCheckout = async () => {
-		try {
-			await validateDeliveryDetails(deliveryDetails);
-			if (paymentMethods.length === 0) {
-				throw Error("Payment methods not found");
-			}
-			if (!isPaymentSucceeded) {
-				throw Error("Payment not successful");
-			}
-			router.push("/checkout");
-		} catch (error:any) {
-			console.error(error);
-			toast.error(error.toString());
-		}
-	};
-
 	useEffect(() => {
 		getPaymentMethods();
-		if (isPaymentSucceeded){
-			router.push("/");
-		}
 	}, []);
 
 	return (
@@ -98,7 +90,6 @@ const HomePage: React.FC = () => {
 							className={classes("-form")}
 							onSubmit={(e) => {
 								e.preventDefault();
-								proceedToCheckout();
 							}}
 						>
 							<Input
@@ -221,8 +212,16 @@ const HomePage: React.FC = () => {
 						{activeMethod ? (
 							<PaymentMethod
 								method={activeMethod}
-								onSuccessfulPayment={() => {
-									proceedToCheckout();
+								onProceedToPay={async () => {
+									try {
+										await validateDeliveryDetails(
+											deliveryDetails
+										);
+										setOpenModal(true);
+									} catch (error: any) {
+										console.error(error);
+										toast.error(error.toString());
+									}
 								}}
 							/>
 						) : (
@@ -278,6 +277,13 @@ const HomePage: React.FC = () => {
 					</section>
 				</div>
 			)}
+			{openModal ? (
+				<PaymentModal
+					onClose={() => {
+						router.push("/checkout");
+					}}
+				/>
+			) : null}
 		</main>
 	);
 };
