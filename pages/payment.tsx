@@ -51,6 +51,15 @@ const HomePage: React.FC = () => {
 
 	const handleChange = (e: any) => {
 		const { name, value } = e.target;
+		const numericalRegex = /^\d+$/;
+		if(e.target.name === "phone" && e.target.value.length > 10)
+		{
+			return;
+		}
+		if(e.target.name === "phone" && !numericalRegex.test(e.target.value))
+		{
+              toast.error("phone number can only have digits");
+		}
 		setDeliveryDetails({
 			...deliveryDetails,
 			[name]: value,

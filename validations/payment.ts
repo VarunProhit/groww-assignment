@@ -91,8 +91,13 @@ export const validateCard = async (cardDetails: ICardDetails) => {
 const currentDate = new Date();
 const dateString = cardDetails.expiryDate; 
 const parts = dateString.split("/");
+if(isNaN(+parts[0]) || isNaN(+parts[1])){
+	return Promise.reject("Invalid Expiry Date");
+}
+if(+parts[0] < 1 || +parts[0] > 12) {
+  return Promise.reject("Invalid Expiry Date");
+}
 const enteredDate = new Date(`20${parts[1]}-${parts[0]}-01`);
-console.log(enteredDate,currentDate);
 if (enteredDate < currentDate) {
     return Promise.reject("Card Expired");
 }
