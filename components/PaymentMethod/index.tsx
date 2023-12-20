@@ -67,7 +67,7 @@ const PaymentMethodCard: React.FC<IPaymentMethodProps> = ({
 		expiryDate: "",
 		cvv: "",
 	});
-	const classes = stylesConfig(styles, "payment-method-card");
+	const classes = stylesConfig(styles, "payment-method");
 
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
@@ -84,60 +84,64 @@ const PaymentMethodCard: React.FC<IPaymentMethodProps> = ({
 	};
 
 	return (
-		<form className={classes("")} onSubmit={handleSubmit}>
-			<Input
-				label="Card Number"
-				className={classes("-input")}
-				placeholder="1234 5678 9012 3456"
-				type="text"
-				required
-				value={cardDetails.cardNumber}
-				onChange={(e: any) =>
-					setCardDetails({
-						...cardDetails,
-						cardNumber: e.target.value,
-					})
-				}
-			/>
-			<Input
-				label="Card Holder"
-				className={classes("-input")}
-				placeholder="John Doe"
-				type="text"
-				required
-				value={cardDetails.cardHolder}
-				onChange={(e: any) =>
-					setCardDetails({
-						...cardDetails,
-						cardHolder: e.target.value,
-					})
-				}
-			/>
-			<Input
-				label="Expiry Date"
-				className={classes("-input")}
-				placeholder="MM/YY"
-				type="text"
-				required
-				value={cardDetails.expiryDate}
-				onChange={(e: any) =>
-					setCardDetails({
-						...cardDetails,
-						expiryDate: e.target.value,
-					})
-				}
-			/>
-			<Input
-				label="CVV"
-				className={classes("-input")}
-				placeholder="123"
-				type="text"
-				required
-				value={cardDetails.cvv}
-				onChange={(e: any) =>
-					setCardDetails({ ...cardDetails, cvv: e.target.value })
-				}
-			/>
+		<form className={classes("-card", "-form")} onSubmit={handleSubmit}>
+			<div className={classes("-form-group")}>
+				<Input
+					label="Card Number"
+					className={classes("-input")}
+					placeholder="1234 5678 9012 3456"
+					type="text"
+					required
+					value={cardDetails.cardNumber}
+					onChange={(e: any) =>
+						setCardDetails({
+							...cardDetails,
+							cardNumber: e.target.value,
+						})
+					}
+				/>
+				<Input
+					label="CVV"
+					className={classes("-input")}
+					placeholder="123"
+					type="text"
+					required
+					value={cardDetails.cvv}
+					onChange={(e: any) =>
+						setCardDetails({ ...cardDetails, cvv: e.target.value })
+					}
+				/>
+			</div>
+			<div className={classes("-form-group")}>
+				<Input
+					label="Card Holder"
+					className={classes("-input")}
+					placeholder="John Doe"
+					type="text"
+					required
+					value={cardDetails.cardHolder}
+					onChange={(e: any) =>
+						setCardDetails({
+							...cardDetails,
+							cardHolder: e.target.value,
+						})
+					}
+				/>
+				<Input
+					label="Expiry Date"
+					className={classes("-input")}
+					placeholder="MM/YY"
+					type="text"
+					required
+					value={cardDetails.expiryDate}
+					onChange={(e: any) =>
+						setCardDetails({
+							...cardDetails,
+							expiryDate: e.target.value,
+						})
+					}
+				/>
+			</div>
 			<Button
 				type="submit"
 				className={classes("-button")}

@@ -278,5 +278,6 @@ $colors: (
 :root::after {
 	--theme-black: var(--black);
 	--theme-white: var(--white);
-	--theme-primary: var(--black);
+	--theme-primary: var(--primary);
+	--theme-secondary: var(--primary-foreground);
 }

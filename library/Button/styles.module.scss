@@ -15,25 +15,25 @@
 	cursor: pointer;
 	user-select: none;
 	transition: all 0.2s ease-in-out;
-	color: var(--theme-black);
-	border: 1px solid var(--theme-black);
+	color: var(--primary-foreground);
+	border: 1px solid var(--primary);
 
 	&--variant {
 		&--filled {
 			background-color: var(--theme-primary);
-			color: var(--theme-white);
+			color: var(--primary-foreground);
 			border-color: var(--theme-primary);
 		}
 
 		&--outlined {
 			background-color: transparent;
-			color: var(--theme-black);
-			border: 1px solid var(--theme-black);
+			color: var(--primary-foreground);
+			border: 1px solid var(--theme-primary);
 		}
 
 		&--text {
 			background-color: transparent;
-			color: var(--theme-black);
+			color: var(--primary-foreground);
 			border: 1px solid transparent;
 		}
 	}

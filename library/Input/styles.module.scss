@@ -16,7 +16,7 @@
         justify-content: space-between;
         align-items: center;
         gap: 24px;
-        color: var(--neutral-500, #a0aec0);
+        color: var(--foreground);
     }
 
     &__input {
@@ -27,13 +27,13 @@
         justify-content: flex-start;
         align-items: center;
         padding: 8px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        border: 1px solid var(--foreground);
         border-radius: 6px;
         transition: all 0.3s ease-in-out;
 
         &:active,
         &:focus {
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid var(--foreground);
         }
 
         &::placeholder {

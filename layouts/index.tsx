@@ -1,9 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { toast, Toaster } from "react-hot-toast";
 import Seo from "./Seo";
+import Header from "@/components/Header";
 import { frontendBaseUrl } from "@/constants/variables";
-import { Toaster } from "react-hot-toast";
+import useStore from "@/hooks/store";
+import { getTheme } from "@/utils/api/theme";
 
 const Layout: React.FC<any> = ({ children }) => {
+	const {setTheme } = useStore();
+
+	const fetchTheme = async () => {
+		try {
+			const res = await getTheme();
+			setTheme(res);
+		} catch (error) {
+			console.error(error);
+			toast.error("Error fetching theme");
+		}
+	};
+	
+	useEffect(() => {
+		fetchTheme();
+	}, []);
+	
 	return (
 		<>
 			<Seo
@@ -38,7 +57,7 @@ const Layout: React.FC<any> = ({ children }) => {
 					siteName: "NextJS Boilerplate",
 				}}
 			/>
-			<div className="logo" />
+			<Header />
 			{children}
 			<Toaster position="top-center" />
 		</>

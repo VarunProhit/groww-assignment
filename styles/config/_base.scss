@@ -6,7 +6,7 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	transition: all var(--transition-time) ease-in-out;
+	// transition: all var(--transition-time) ease-in-out;
 	scroll-behavior: smooth;
 }
 
@@ -45,21 +45,8 @@ html {
 body {
 	font-family: var(--font-poppins);
 	overflow-x: hidden;
-	background-color: var(--accent-color);
-	color: var(--theme-white);
-}
-
-.logo {
-	position: fixed;
-	top: 12px;
-	left: 24px;
-	height: 60px;
-	width: 100%;
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position-x: left;
-	background-position-y: center;
-	background-image: var(--company-logo);
+	background-color: var(--background);
+	color: var(--foreground);
 }
 
 .dispn {
