@@ -56,7 +56,9 @@ const PaymentModal: React.FC<IPaymentModalProps> = ({ onClose }) => {
 					<TickIcon />
 				)}
 				<Typography size="xl" as="h3">
-					Processing your payment.
+					{processing
+						? "Processing your payment. "
+						: "Payment Success!"}
 				</Typography>
 				<Typography
 					size="md"
