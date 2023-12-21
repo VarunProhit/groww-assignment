@@ -79,13 +79,6 @@ const CheckoutPage: React.FC = () => {
 					>
 						Order Failed
 					</Typography>
-					<Typography
-						size="md"
-						weight="medium"
-						className={classes("-error-subtitle")}
-					>
-						Please try again later
-					</Typography>
 					<Button
 						onClick={() => {
 							router.push("/payment");
